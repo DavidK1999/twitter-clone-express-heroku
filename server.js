@@ -12,7 +12,7 @@ const allowedOrigins = ['http://localhost:8000', 'https://twitter-clone-lite.her
 app.use(cors({
     origin: function(origin, callback) {
         if(!origin) return callback(null, true)
-        if(allowedOrigins.indexOf(origin) === -1) {
+        if(allowedOrigins.indexOf(origin) !== -1) {
             let msg = 'Not allowed by cors'
             return callback(new Error(msg), false)
         }
