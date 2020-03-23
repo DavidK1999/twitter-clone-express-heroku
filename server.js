@@ -1,25 +1,11 @@
 require('dotenv').config();
 const express = require('express')
-let cors = require('cors')
 let path = require('path')
 const app = express()
 const port = process.env.PORT
 const passport = require('passport')
 require('./db/db.js')
 
-const allowedOrigins = ['http://localhost:8000', 'http://localhost:8000/api/user', 'https://twitter-clone-lite.herokuapp.com']
-
-app.use(cors({
-    origin: function(origin, callback) {
-        if(!origin) return callback(null, true)
-        if(allowedOrigins.indexOf(origin) !== -1) {
-            let msg = 'Not allowed by cors'
-            return callback(new Error(msg), false)
-        }
-
-        return callback(null, true)
-    }
-}))
 
 app.use(express.urlencoded({extended: false}))
 app.use(express.json())
