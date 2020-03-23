@@ -1,30 +1,25 @@
 require('dotenv').config();
 const express = require('express')
+let cors = require('cors')
 let path = require('path')
 const app = express()
 const port = process.env.PORT
 const passport = require('passport')
 require('./db/db.js')
 
+const allowedOrigins = ['http://localhost:8000/', 'http://twitter-clone-lite.herokuapp.com']
 
-app.use(function (req, res, next) {
+app.use(cors({
+    origin: function(origin, callback) {
+        if(!origin) return callback(null, true)
+        if(allowedOrigins.indexOf(origin) === -1) {
+            let msg = 'Not allowed by cors'
+            return callback(new Error(msg), false)
+        }
 
-    // Website you wish to allow to connect
-    res.setHeader('Access-Control-Allow-Origin', 'https://twitter-clone-lite.herokuapp.com');
- 
-    // Request methods you wish to allow
-    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
- 
-    // Request headers you wish to allow
-    res.setHeader('Access-Control-Allow-Headers', 'auth-token');
- 
-    // Set to true if you need the website to include cookies in the requests sent
-    // to the API (e.g. in case you use sessions)
-    res.setHeader('Access-Control-Allow-Credentials', true);
- 
-    // Pass to next layer of middleware
-    next();
- });
+        return callback(null, true)
+    }
+}))
 
 app.use(express.urlencoded({extended: false}))
 app.use(express.json())
