@@ -1,4 +1,5 @@
 require('dotenv').config();
+const cors = require('cors')
 const express = require('express')
 let path = require('path')
 const app = express()
@@ -6,7 +7,8 @@ const port = process.env.PORT
 const passport = require('passport')
 require('./db/db.js')
 
-
+app.use(cors())
+app.options('*', cors())
 app.use(express.urlencoded({extended: false}))
 app.use(express.json())
 app.use(passport.initialize())
