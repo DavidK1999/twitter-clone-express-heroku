@@ -4,23 +4,27 @@ let path = require('path')
 const app = express()
 const port = process.env.PORT
 const passport = require('passport')
-const cors = require('cors')
 require('./db/db.js')
 
-const allowedOrigins = ['http://localhost:8000/']
 
-app.use(cors({
-    origin: function(origin, callback) {
-        if(!origin) return callback(null, true)
-        
-        if(allowedOrigins.indexOf(origin) == -1) {
-            let msg = 'Not allowed by cors'
-            return callback(new Error(msg), false)
-        }
+app.use(function (req, res, next) {
 
-        return callback(null, true)
-    }
-}))
+    // Website you wish to allow to connect
+    res.setHeader('Access-Control-Allow-Origin', '*');
+ 
+    // Request methods you wish to allow
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
+ 
+    // Request headers you wish to allow
+    res.setHeader('Access-Control-Allow-Headers', '*');
+ 
+    // Set to true if you need the website to include cookies in the requests sent
+    // to the API (e.g. in case you use sessions)
+    res.setHeader('Access-Control-Allow-Credentials', true);
+ 
+    // Pass to next layer of middleware
+    next();
+ });
 
 app.use(express.urlencoded({extended: false}))
 app.use(express.json())
