@@ -7,7 +7,7 @@ const port = process.env.PORT
 const passport = require('passport')
 require('./db/db.js')
 
-const allowedOrigins = ['http://localhost:8000', 'http://twitter-clone-lite.herokuapp.com']
+const allowedOrigins = ['http://localhost:8000', 'https://twitter-clone-lite.herokuapp.com']
 
 app.use(cors({
     origin: function(origin, callback) {
