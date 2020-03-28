@@ -7,7 +7,7 @@ const port = process.env.PORT
 const passport = require('passport')
 require('./db/db.js')
 
-app.use(cors())
+// app.use(cors())
 // app.options('*', cors())
 app.use(express.urlencoded({extended: false}))
 app.use(express.json())
